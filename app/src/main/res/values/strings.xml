@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">QuebecProject</string>
     <string name="action_settings">Settings</string>
@@ -6,6 +7,10 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
+    <!-- Strings for tests -->
+    <string name="test3Title">Test Level 3</string>
+    <string name="test3Content">My life is like a video game</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

@@ -21,15 +21,17 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
+    /*private AppBarConfiguration appBarConfiguration;
+    private ActivityMainBinding binding;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.typetest3);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        /*binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         setSupportActionBar(binding.toolbar);
 
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAnchorView(R.id.fab)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
     }
 
     @Override
@@ -71,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        /*NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+                || super.onSupportNavigateUp();*/
+        return false;
     }
 }

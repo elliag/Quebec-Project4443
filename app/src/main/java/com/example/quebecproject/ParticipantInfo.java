@@ -15,6 +15,11 @@ import androidx.annotation.ColorInt;
 public class ParticipantInfo extends Activity implements OnClickListener {
 
     final static String MYDEBUG = "MYDEBUG";
+
+    // String keys for savedInstanceState
+    private final static String NAME_KEY = "name";
+    private final static String POSTURE_KEY = "posture";
+
     EditText nameField;
     Button buttonOneHanded, buttonTwoHanded, buttonStart;
     String handPosture;
@@ -29,9 +34,11 @@ public class ParticipantInfo extends Activity implements OnClickListener {
         nameField = (EditText) findViewById(R.id.textFieldName);
 
         buttonOneHanded = (Button) findViewById(R.id.buttonOneHanded);
+        buttonOneHanded.setBackgroundColor(Color.LTGRAY);
         buttonOneHanded.setOnClickListener(this);
 
         buttonTwoHanded = (Button) findViewById(R.id.buttonTwoHanded);
+        buttonTwoHanded.setBackgroundColor(Color.LTGRAY);
         buttonTwoHanded.setOnClickListener(this);
 
         buttonStart = (Button) findViewById(R.id.buttonStart);
@@ -69,6 +76,31 @@ public class ParticipantInfo extends Activity implements OnClickListener {
             startActivity(i);
              */
 
+        } else {
+            // do nothing
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putCharSequence(NAME_KEY, nameField.getText());
+        savedInstanceState.putString(POSTURE_KEY, handPosture);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        nameField.setText(savedInstanceState.getCharSequence(NAME_KEY));
+        handPosture = savedInstanceState.getString(POSTURE_KEY);
+        if (savedInstanceState.getString(POSTURE_KEY).equals("single")) {
+            buttonOneHanded.setBackgroundColor(Color.GRAY);
+            buttonTwoHanded.setBackgroundColor(Color.LTGRAY);
+        } else if (savedInstanceState.getString(POSTURE_KEY).equals("double")) {
+            buttonOneHanded.setBackgroundColor(Color.LTGRAY);
+            buttonTwoHanded.setBackgroundColor(Color.GRAY);
         } else {
             // do nothing
         }

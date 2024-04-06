@@ -48,4 +48,13 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+
+    <!-- strings for participant info -->
+    <string name="labelparticipantinfo">Participant Info</string>
+    <string name="labelparticipantname">name</string>
+    <string name="labelhandposture">Hand Posture</string>
+    <string name="button1handed">One Handed</string>
+    <string name="button2handed">Two Handed</string>
+    <string name="buttonstart">Start</string>
+
 </resources>

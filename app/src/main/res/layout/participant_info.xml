@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/labelParticipantInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:padding="10dp"
+        android:text="@string/labelparticipantinfo"
+        android:textAllCaps="true"
+        android:textSize="25dp"/>
+
+    <EditText
+        android:id="@+id/textFieldName"
+        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:padding="5dp"
+        android:background="#D8D8D8"
+        android:hint="@string/labelparticipantname"
+        android:inputType="text"
+        />
+
+    <TextView
+        android:id="@+id/labelHandPosture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:padding="10dp"
+        android:text="@string/labelhandposture"
+        android:textAllCaps="true"
+        android:textSize="25dp"/>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/buttonOneHanded"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:text="@string/button1handed" />
+
+            <Button
+                android:id="@+id/buttonTwoHanded"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:text="@string/button2handed" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="@string/buttonstart" />
+
+
+</LinearLayout>

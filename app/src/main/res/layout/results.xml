@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="#252525"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/labelresultstitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="@string/labelresultstitle"
+        android:textAllCaps="true"
+        android:textColor="#ffffff"
+        android:textSize="40sp"/>
+
+    <TextView
+        android:id="@+id/labelparticipantsubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        android:text="@string/labelparticipantsubtitle"
+        android:textAllCaps="true"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+
+    <TextView
+        android:id="@+id/r_participant"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:padding="1dp"
+        android:gravity="center"
+        android:text="test_participant"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/r_posture"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:padding="1dp"
+        android:text="test_posture"
+        android:textColor="#ffffff"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFF" />
+
+    <TextView
+        android:id="@+id/labeltotalsubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/labeltotalsubtitle"
+        android:textColor="#ffffff"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/r_avgtime"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:padding="1dp"
+        android:gravity="center"
+        android:text="test_averagetime"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/r_avgacc"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:padding="1dp"
+        android:text="test_averageaccuracy"
+        android:textColor="#ffffff"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFF" />
+
+    <TextView
+        android:id="@+id/labeltestonesubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/labeltestonesubtitle"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/r_test1time"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:padding="1dp"
+        android:gravity="center"
+        android:text="test1_time"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/r_test1acc"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:padding="1dp"
+        android:text="test1_accuracy"
+        android:textColor="#ffffff"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFF" />
+
+    <TextView
+        android:id="@+id/labeltesttwosubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:padding="5dp"
+        android:text="@string/labeltesttwosubtitle"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/r_test2time"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:padding="1dp"
+        android:gravity="center"
+        android:text="test2_time"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/r_test2acc"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:padding="1dp"
+        android:text="test2_accuracy"
+        android:textColor="#ffffff"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFF" />
+
+    <TextView
+        android:id="@+id/labeltestthreesubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:padding="5dp"
+        android:text="@string/labeltestthreesubtitle"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/r_test3time"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:padding="1dp"
+        android:gravity="center"
+        android:text="test3_time"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/r_test3acc"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:padding="1dp"
+        android:text="test3_accuracy"
+        android:textColor="#ffffff"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFF" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/buttonReturn"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:text="@string/buttonreturn" />
+    </TableLayout>
+</LinearLayout>

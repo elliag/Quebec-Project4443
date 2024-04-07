@@ -62,14 +62,17 @@ public class ParticipantInfo extends Activity implements OnClickListener {
 
             Log.i(MYDEBUG, "two hand pressed");
         } else if (v == buttonStart) {
-            /*
+
             // bundle the parameters to pass on to activity
             Bundle b = new Bundle();
             b.putString("name", nameField.getText().toString());
             b.putString("handPosture", handPosture);
-             */
+
+
             ParticipantData.setName(nameField.getText().toString());
             ParticipantData.setPosture(handPosture);
+
+            b.putInt("test number", 1);
 
             Log.i(MYDEBUG, "name: " + nameField.getText().toString());
             Log.i(MYDEBUG, "hand posture: " + handPosture);

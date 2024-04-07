@@ -8,9 +8,25 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <!-- Strings for "proceed to next test" screen -->
+    <string name="testCompleted1">Test 1 Complete</string>
+    <string name="testCompleted2">Test 2 Complete</string>
+    <string name="testCompleted3">Test 3 Complete</string>
+
+    <string name="proceedNext1">CONTINUE TO TEST 2</string>
+    <string name="proceedNext2">CONTINUE TO TEST 3</string>
+    <string name="proceedNext3">CONTINUE TO RESULTS</string>
+
     <!-- Strings for tests -->
+    <string name="test1Title">Test Level 1</string>
+    <string name="test2Title">Test Level 2</string>
     <string name="test3Title">Test Level 3</string>
-    <string name="test3Content">My life is like a video game</string>
+
+    <string name="test1Content">Light</string>
+    <string name="test2Content">"The quick brown fox jumps over the lazy dog</string>
+    <string name="test3Content">
+        Gon, you are light. Sometimes you shine so brightly, I must look away. But even so, is it still okay if I stay by your side?
+    </string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

@@ -28,7 +28,7 @@
         android:layout_below="@id/divider2"
         android:layout_marginTop="-1dp"
         android:padding="10dp"
-        android:text="@string/test3Content"
+        android:text="@string/test1Content"
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="25sp" />

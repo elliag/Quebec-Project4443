@@ -22,16 +22,16 @@ import androidx.annotation.Nullable;
 
 public class TypeTestActivity extends Activity implements TextWatcher{
     final static String MYDEBUG = "MYDEBUG";
-    int LAUNCH_SECOND_ACTIVITY = 1;
-    InputMethodManager imm;
-    private TextView testTitle;
-    private TextView testTextContent;
-    private char[] testTextContentCharArr;
-    private Spannable spannable;
-    private String inputTextBefore;
-    private String inputTextString;
-    private EditText inputText;
-    private Button startButton;
+    int LAUNCH_SECOND_ACTIVITY = 1;             //request code for the startActivityResult stuff
+    InputMethodManager imm;                     //to manage the keyboard
+    private TextView testTitle;                 //title of the test (Test 1, Test 2, Test 3)
+    private TextView testTextContent;           //content of the test (to be copies by the user)
+    private char[] testTextContentCharArr;      //char array that holds the test content
+    private Spannable spannable;                //this helps change the colour of the text
+    private String inputTextBefore;             //the phrase right before the next key phrase
+    private String inputTextString;             //String version of whatever tf the user is typing
+    private EditText inputText;                 //EditText that holds what the user is typing
+    private Button startButton;                 //start button to start the test
 
     //Participant Info
     private String name;
@@ -101,21 +101,21 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         super.onSaveInstanceState(outState);
     }
 
-    private void nextTest() {
+    private void nextTest() {   //called when the current test has finished
         endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;
-        float elapsedTimeSeconds = elapsedTime / 1000.0f;
+        float elapsedTimeSeconds = elapsedTime / 1000.0f;   //get the time it took to type
 
-        testNumber++;
+        testNumber++;   //increment test number for the next test
 
-        imm.hideSoftInputFromWindow(inputText.getWindowToken(),0);
+        imm.hideSoftInputFromWindow(inputText.getWindowToken(),0);  //hide the keyboard
 
         double accuracy;
-        accuracy = (numCorrects - (double) numErrors) / testTextContent.length();
+        accuracy = (numCorrects - (double) numErrors) / testTextContent.length();   //compute accuracy (this is wrong idk what to do)
 
         Log.i(MYDEBUG, "accuracy = " + String.valueOf(accuracy));
 
-        switch(testNumber) {
+        switch(testNumber) {    //log the data depending on what test we're on
             case 1:
                 ParticipantData.setTest1Time(elapsedTimeSeconds);
                 ParticipantData.setTest1Accuracy(accuracy);
@@ -129,18 +129,18 @@ public class TypeTestActivity extends Activity implements TextWatcher{
                 ParticipantData.setTest3Accuracy(accuracy);
         }
 
-        Bundle b = new Bundle();
+        Bundle b = new Bundle();    //this is the only thing thats still being bundled but we can probably change it
 
         b.putInt("next test number", testNumber);
 
         Intent i = new Intent(this, ProceedNextActivity.class);
         i.putExtras(b);
-        startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);
+        startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);      //bring up the continue screen
 
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //i feel like this is whats making it slow, it can probably be changed
         super.onActivityResult(requestCode, resultCode, data);
 
         Bundle b;
@@ -161,6 +161,7 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         }
     }
 
+    //these methods are for listening for when the user input is edited
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         inputTextBefore = inputTextString; //the input string before any changes are made
@@ -168,7 +169,7 @@ public class TypeTestActivity extends Activity implements TextWatcher{
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() == testTextContent.getText().toString().length()) {
+        if (s.length() == testTextContent.getText().toString().length()) {  //when the test is done
             nextTest();
         }
     }

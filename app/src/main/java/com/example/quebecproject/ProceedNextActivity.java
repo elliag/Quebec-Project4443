@@ -12,21 +12,10 @@ import androidx.annotation.Nullable;
 
 public class ProceedNextActivity extends Activity {
     final static String MYDEBUG = "MYDEBUG";
-    //final static int LAUNCH_SECOND_ACTIVITY = 1;
-    private Bundle bundle;
-    private TextView testComplete;
-    private TextView proceedNext;
-    private Button continueButton;
-    private int nextTestNumber;
-    private String name;
-    private String handPosture;
-    //fields for time and accuracy across all tests
-    private int numErrorsTest1;
-    private int numErrorsTest2;
-    private int numErrorsTest3;
-    private int elapsedTimeTest1;
-    private int elapsedTimeTest2;
-    private int elapsedTimeTest3;
+    private TextView testComplete;  //title that says "Test ____ complete"
+    private TextView proceedNext;    //title that says "proceed to test ____"
+    private Button continueButton;   //button to proceed to the next test
+    private int nextTestNumber;      //the next test number (either 1, 2, 3 or 4) (4 is for Results)
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +35,7 @@ public class ProceedNextActivity extends Activity {
         proceedNext = (TextView) findViewById(R.id.proceedNext);
         continueButton = (Button) findViewById(R.id.continueButton);
 
-        switch(nextTestNumber) {
+        switch(nextTestNumber) {    //shows different text depending on what test u will proceed to
             case 2:
                 testComplete.setText(R.string.testCompleted1);
                 proceedNext.setText(R.string.proceedNext1);
@@ -76,7 +65,7 @@ public class ProceedNextActivity extends Activity {
 
                     Intent returnIntent = new Intent();
                     returnIntent.putExtras(b);
-                    setResult(Activity.RESULT_OK,returnIntent);
+                    setResult(Activity.RESULT_OK,returnIntent); //kill me
                     finish();
                 }
             }

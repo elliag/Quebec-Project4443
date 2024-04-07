@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#252525">
 
     <TextView
         android:id="@+id/testTitle"
@@ -9,15 +10,44 @@
         android:layout_height="wrap_content"
         android:text="@string/test3Title"
         android:textAlignment="center"
-        android:textSize="34sp" />
+        android:textColor="#9F9F9F"
+        android:textSize="40sp" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/testTitle"
+        android:background="?android:attr/listDivider"
+        android:backgroundTint="#FFFFFF" />
 
     <TextView
         android:id="@+id/testContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/testTitle"
+        android:layout_below="@id/divider2"
+        android:layout_marginTop="-1dp"
+        android:padding="10dp"
         android:text="@string/test3Content"
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textColor="#ffffff"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/testContent"
+        android:layout_centerInParent="true"
+        android:text="Start" />
+
+    <EditText
+        android:id="@+id/textInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/startButton"
+        android:ems="10"
+        android:inputType="text"
+        android:alpha="0"/>
 
 </RelativeLayout>

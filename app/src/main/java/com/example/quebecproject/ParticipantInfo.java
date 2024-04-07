@@ -69,12 +69,12 @@ public class ParticipantInfo extends Activity implements OnClickListener {
 
             Log.i(MYDEBUG, "name: " + nameField.getText().toString());
             Log.i(MYDEBUG, "hand posture: " + handPosture);
-            /*
+
             // start the game
-            Intent i = new Intent(getApplicationContext(), //the tests/level java file name goes here);
+            Intent i = new Intent(getApplicationContext(), TypeTestActivity.class); //the tests/level java file name goes here);
             i.putExtras(b);
             startActivity(i);
-             */
+
 
         } else {
             // do nothing

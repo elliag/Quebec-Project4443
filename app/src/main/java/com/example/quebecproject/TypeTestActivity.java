@@ -87,6 +87,9 @@ public class TypeTestActivity extends Activity {
                 inputText.setFocusableInTouchMode(true);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(inputText, InputMethodManager.SHOW_FORCED);
+
+                Log.i(MYDEBUG, "name: " + ParticipantData.getName());
+                Log.i(MYDEBUG, "hand posture: " + ParticipantData.getPosture());
             }
         });
     }

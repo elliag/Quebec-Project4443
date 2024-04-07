@@ -1,16 +1,21 @@
 package com.example.quebecproject;
 
+import java.util.ArrayList;
+
 public class ParticipantData {
     private static String name = "";
     private static String posture = "single";
 
-    private static float test1Time = 0;
+    private static float[] testTimes = new float[3];
+    /*private static float test1Time = 0;
     private static float test2Time = 0;
-    private static float test3Time = 0;
+    private static float test3Time = 0;*/
 
-    private static double test1Accuracy = 0;
+    private static double[] testAccuracies = new double[3];
+
+    /*private static double test1Accuracy = 0;
     private static double test2Accuracy = 0;
-    private static double test3Accuracy = 0;
+    private static double test3Accuracy = 0;*/
 
     public static String getName() {
         return name;
@@ -29,50 +34,50 @@ public class ParticipantData {
     }
 
     public static float getTest1Time() {
-        return test1Time;
+        return testTimes[0];
     }
 
     public static void setTest1Time(float test1Time) {
-        ParticipantData.test1Time = test1Time;
+        ParticipantData.testTimes[0] = test1Time;
     }
 
     public static float getTest2Time() {
-        return test2Time;
+        return testTimes[1];
     }
 
     public static void setTest2Time(float test2Time) {
-        ParticipantData.test2Time = test2Time;
+        ParticipantData.testTimes[1] = test2Time;
     }
 
     public static float getTest3Time() {
-        return test3Time;
+        return testTimes[2];
     }
 
     public static void setTest3Time(float test3Time) {
-        ParticipantData.test3Time = test3Time;
+        ParticipantData.testTimes[2] = test3Time;
     }
 
     public static double getTest1Accuracy() {
-        return test1Accuracy;
+        return testAccuracies[0];
     }
 
     public static void setTest1Accuracy(double test1Accuracy) {
-        ParticipantData.test1Accuracy = test1Accuracy;
+        ParticipantData.testAccuracies[0] = test1Accuracy;
     }
 
     public static double getTest2Accuracy() {
-        return test2Accuracy;
+        return testAccuracies[1];
     }
 
     public static void setTest2Accuracy(double test2Accuracy) {
-        ParticipantData.test2Accuracy = test2Accuracy;
+        ParticipantData.testAccuracies[1] = test2Accuracy;
     }
 
     public static double getTest3Accuracy() {
-        return test3Accuracy;
+        return testAccuracies[2];
     }
 
     public static void setTest3Accuracy(double test3Accuracy) {
-        ParticipantData.test3Accuracy = test3Accuracy;
+        ParticipantData.testAccuracies[2] = test3Accuracy;
     }
 }

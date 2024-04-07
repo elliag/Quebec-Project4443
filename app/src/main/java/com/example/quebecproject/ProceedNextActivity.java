@@ -35,8 +35,9 @@ public class ProceedNextActivity extends Activity {
 
         Bundle b = getIntent().getExtras();
         nextTestNumber = b != null ? b.getInt("next test number") : 0;
-        name = b != null ? b.getString("name") : null;
-        handPosture = b != null ? b.getString("hand posture") : null;
+        Log.i(MYDEBUG, String.valueOf(nextTestNumber));
+        //name = b != null ? b.getString("name") : null;
+        //handPosture = b != null ? b.getString("hand posture") : null;
         Initialize();
     }
 
@@ -63,17 +64,21 @@ public class ProceedNextActivity extends Activity {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle b = new Bundle();
-                b.putString("name", name);
-                b.putString("hand posture", handPosture);
-                b.putInt("test number", nextTestNumber);
+                if (nextTestNumber == 4) {
+                    Intent i = new Intent(getApplicationContext(), Results.class);
+                    startActivity(i);
+                    finish();
+                }
+                else {
+                    Bundle b = new Bundle();
 
-                Intent returnIntent = new Intent();
-                returnIntent.putExtras(b);
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
+                    b.putInt("test number", nextTestNumber);
 
-                //Log.i(MYDEBUG, String.valueOf(nextTestNumber));
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtras(b);
+                    setResult(Activity.RESULT_OK,returnIntent);
+                    finish();
+                }
             }
         });
     }

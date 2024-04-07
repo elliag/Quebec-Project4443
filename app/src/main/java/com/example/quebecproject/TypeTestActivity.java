@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 public class TypeTestActivity extends Activity implements TextWatcher{
     final static String MYDEBUG = "MYDEBUG";
     int LAUNCH_SECOND_ACTIVITY = 1;
+    InputMethodManager imm;
     private TextView testTitle;
     private TextView testTextContent;
     private char[] testTextContentCharArr;
@@ -40,6 +41,7 @@ public class TypeTestActivity extends Activity implements TextWatcher{
     private int testNumber;
     //accuracy
     private int numErrors = 0;
+    private int numCorrects = 0;
     //time
     private long startTime;
     private long endTime;
@@ -52,8 +54,6 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         setContentView(R.layout.typetest);
 
         Bundle b = getIntent().getExtras();
-        name = b != null ? b.getString("name") : null;
-        handPosture = b != null ? b.getString("hand posture") : null;
         testNumber = b != null ? b.getInt("test number") : 0;
         Initialize();
     }
@@ -87,12 +87,8 @@ public class TypeTestActivity extends Activity implements TextWatcher{
             public void onClick(View v) {   //brings up the keyboard when start button pressed
                 inputText.requestFocus();
                 inputText.setFocusableInTouchMode(true);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(inputText, InputMethodManager.SHOW_FORCED);
-
-
-                Log.i(MYDEBUG, "name: " + ParticipantData.getName());
-                Log.i(MYDEBUG, "hand posture: " + ParticipantData.getPosture());
 
                 startTime = System.currentTimeMillis(); //start the timer
 
@@ -106,32 +102,41 @@ public class TypeTestActivity extends Activity implements TextWatcher{
     }
 
     private void nextTest() {
-        testNumber++;
         endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;
-        double elapsedTimeSeconds = elapsedTime / 1000.0;
+        float elapsedTimeSeconds = elapsedTime / 1000.0f;
+
+        testNumber++;
+
+        imm.hideSoftInputFromWindow(inputText.getWindowToken(),0);
+
+        double accuracy;
+        accuracy = (numCorrects - (double) numErrors) / testTextContent.length();
+
+        Log.i(MYDEBUG, "accuracy = " + String.valueOf(accuracy));
+
+        switch(testNumber) {
+            case 1:
+                ParticipantData.setTest1Time(elapsedTimeSeconds);
+                ParticipantData.setTest1Accuracy(accuracy);
+                break;
+            case 2:
+                ParticipantData.setTest2Time(elapsedTimeSeconds);
+                ParticipantData.setTest2Accuracy(accuracy);
+                break;
+            case 3:
+                ParticipantData.setTest3Time(elapsedTimeSeconds);
+                ParticipantData.setTest3Accuracy(accuracy);
+        }
 
         Bundle b = new Bundle();
-        b.putString("name", name);
-        b.putString("hand posture", handPosture);
-        b.putString("test time", String.valueOf(elapsedTimeSeconds));
-        b.putInt("number of errors" , numErrors);
+
         b.putInt("next test number", testNumber);
 
         Intent i = new Intent(this, ProceedNextActivity.class);
         i.putExtras(b);
         startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);
 
-        /*Intent i = new Intent(getApplicationContext(), ProceedNextActivity.class);
-        i.putExtras(b);
-        i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(i);
-        finish();*/
-
-        /*Intent returnIntent = new Intent();
-        returnIntent.putExtras(b);
-        setResult(Activity.RESULT_OK,returnIntent);
-        finish();*/
     }
 
     @Override
@@ -143,16 +148,15 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if(resultCode == Activity.RESULT_OK){
                 b = data.getExtras();
-                name = b != null ? b.getString("name") : null;
+                //name = b != null ? b.getString("name") : null;
                 testNumber = b != null ? b.getInt("test number") : 0;
-                handPosture = b != null ? b.getString("hand posture") : null;
+                //handPosture = b != null ? b.getString("hand posture") : null;
 
                 inputText.removeTextChangedListener(this);
+
+
                 Initialize();
 
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                // Write your code if there's no result
             }
         }
     }
@@ -186,6 +190,7 @@ public class TypeTestActivity extends Activity implements TextWatcher{
             }
             else {
                 spannable.setSpan(new ForegroundColorSpan(Color.GREEN), inputTextStringCharArray.length-1, inputTextStringCharArray.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);    //colour change green = correct
+                numCorrects++;
             }
             testTextContent.setText(spannable, TextView.BufferType.SPANNABLE);
         }

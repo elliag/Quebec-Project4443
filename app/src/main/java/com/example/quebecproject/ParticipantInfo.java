@@ -62,17 +62,21 @@ public class ParticipantInfo extends Activity implements OnClickListener {
 
             Log.i(MYDEBUG, "two hand pressed");
         } else if (v == buttonStart) {
+            /*
             // bundle the parameters to pass on to activity
             Bundle b = new Bundle();
             b.putString("name", nameField.getText().toString());
             b.putString("handPosture", handPosture);
+             */
+            ParticipantData.setName(nameField.getText().toString());
+            ParticipantData.setPosture(handPosture);
 
             Log.i(MYDEBUG, "name: " + nameField.getText().toString());
             Log.i(MYDEBUG, "hand posture: " + handPosture);
 
             // start the game
             Intent i = new Intent(getApplicationContext(), TypeTestActivity.class); //the tests/level java file name goes here);
-            i.putExtras(b);
+            //i.putExtras(b);
             startActivity(i);
 
 

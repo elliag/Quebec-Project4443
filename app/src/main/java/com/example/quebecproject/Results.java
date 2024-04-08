@@ -41,6 +41,7 @@ public class Results extends Activity implements OnClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.results);
         Initialize();
     }
 

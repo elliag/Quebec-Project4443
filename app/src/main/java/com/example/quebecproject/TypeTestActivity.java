@@ -202,6 +202,7 @@ public class TypeTestActivity extends Activity implements TextWatcher{
             //Log.i(MYDEBUG, inputTextString);
             inputTextStringCharArray = inputTextString.toCharArray();                                               //convert the input string into a char array
             lastLetter = inputTextStringCharArray[inputTextStringCharArray.length-1];                               //get the last letter entered
+           //Log.i(MYDEBUG, "the array = " + inputTextStringCharArray.length);
             currentPos = testTextContentCharArr[inputTextStringCharArray.length-1];                                 //get the letter to compare it ^ to
             if (lastLetter != currentPos) {
                 spannable.setSpan(new ForegroundColorSpan(Color.RED), inputTextStringCharArray.length-1, inputTextStringCharArray.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);  //colour change red

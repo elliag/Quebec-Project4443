@@ -76,7 +76,7 @@
     <!-- start of results strings -->
     <string name="labelresultstitle">Results</string>
     <string name="labelparticipantsubtitle">Participant Info:</string>
-    <string name="labeltotalsubtitle">Total:</string>
+    <string name="labeltotalsubtitle">Average:</string>
     <string name="labeltestonesubtitle">Test 1:</string>
     <string name="labeltesttwosubtitle">Test 2:</string>
     <string name="labeltestthreesubtitle">Test 3:</string>

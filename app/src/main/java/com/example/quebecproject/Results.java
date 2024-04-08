@@ -127,7 +127,14 @@ public class Results extends Activity implements OnClickListener {
 
         //assign values
         participant.setText(ParticipantData.getName());
-        posture.setText(ParticipantData.getPosture());
+        switch (ParticipantData.getPosture()) {
+            case "single":
+                posture.setText("One-handed");
+                break;
+            case "double":
+                posture.setText("Two-handed");
+                break;
+        }
         averageTime.setText(averageSeconds);
         averageAccuracy.setText(averageAcc);
         test1Time.setText(test1seconds);

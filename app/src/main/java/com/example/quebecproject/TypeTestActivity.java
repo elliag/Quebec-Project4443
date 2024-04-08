@@ -199,6 +199,7 @@ public class TypeTestActivity extends Activity implements TextWatcher{
 
         if (s.length() >= inputTextBefore.length()) {
             inputTextString = s.toString();                                                                         //parse the string from the EditText every time a key is pressed
+            //Log.i(MYDEBUG, inputTextString);
             inputTextStringCharArray = inputTextString.toCharArray();                                               //convert the input string into a char array
             lastLetter = inputTextStringCharArray[inputTextStringCharArray.length-1];                               //get the last letter entered
             currentPos = testTextContentCharArr[inputTextStringCharArray.length-1];                                 //get the letter to compare it ^ to

@@ -3,8 +3,10 @@ package com.example.quebecproject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -55,6 +57,8 @@ public class TypeTestActivity extends Activity implements TextWatcher{
 
         Bundle b = getIntent().getExtras();
         testNumber = b != null ? b.getInt("test number") : 0;
+
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         Initialize();
     }
 
@@ -159,6 +163,24 @@ public class TypeTestActivity extends Activity implements TextWatcher{
 
             }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putCharSequence("TEST_TITLE_KEY", testTitle.getText());
+        outState.putCharSequence("TEST_CONTENT_KEY", testTextContent.getText());
+        outState.putCharSequence("INPUT_KEY", inputText.getText());
+        outState.putInt("TEST_NUMBER_KEY", testNumber);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        testTitle.setText(savedInstanceState.getCharSequence("TEST_TITLE_KEY"));
+        testTextContent.setText(savedInstanceState.getCharSequence("TEST_CONTENT_KEY"));
+        inputText.setText(savedInstanceState.getCharSequence("INPUT_KEY"));
+        testNumber = savedInstanceState.getInt("TEST_NUMBER_KEY");
     }
 
     //these methods are for listening for when the user input is edited

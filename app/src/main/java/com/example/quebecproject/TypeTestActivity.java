@@ -100,11 +100,6 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         });
     }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
     private void nextTest() {   //called when the current test has finished
         endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;

@@ -49,6 +49,10 @@ public class TypeTestActivity extends Activity implements TextWatcher{
     private long endTime;
     private long elapsedTime;
 
+    //more
+    int wordIndex;
+    int letterIndex;
+    String[] testContentStringArr;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,6 +85,7 @@ public class TypeTestActivity extends Activity implements TextWatcher{
                 break;
         }
         testTextContentCharArr = testTextContent.getText().toString().toCharArray();    //convert the content of that text view into a char array.
+        testContentStringArr = testTextContent.getText().toString().split(" ");     //separate words in the test content
         spannable = new SpannableString(testTextContent.getText());     //initialize the Spannable string that will allow us to change the colour of the test content when someone makes a boo boo mistake
         inputTextString = "";
         inputText = (EditText) findViewById(R.id.textInput);            //initialize the invisible EditText that will hold what the user types.
@@ -98,6 +103,8 @@ public class TypeTestActivity extends Activity implements TextWatcher{
 
             }
         });
+        wordIndex = 0;
+        letterIndex = 0;
     }
 
     private void nextTest() {   //called when the current test has finished
@@ -181,14 +188,13 @@ public class TypeTestActivity extends Activity implements TextWatcher{
     //these methods are for listening for when the user input is edited
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        //Log.i(MYDEBUG, "after = " + after);
         inputTextBefore = inputTextString; //the input string before any changes are made
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() == testTextContent.getText().toString().length()) {  //when the test is done
-            nextTest();
-        }
+
     }
 
     @Override
@@ -197,25 +203,69 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         char lastLetter;
         char currentPos;
 
-        if (s.length() >= inputTextBefore.length()) {
-            inputTextString = s.toString();                                                                         //parse the string from the EditText every time a key is pressed
-            //Log.i(MYDEBUG, inputTextString);
-            inputTextStringCharArray = inputTextString.toCharArray();                                               //convert the input string into a char array
+        inputTextString = s.toString();
+        inputTextStringCharArray = inputTextString.toCharArray();//convert the input string into a char array
+
+        int difference = s.length() - inputTextBefore.length();
+        Log.i(MYDEBUG, "difference = " + difference);
+
+        if (difference == 1 && inputText.hasFocus()) {
+            Log.i(MYDEBUG, "reached tap method");
+            //inputTextStringCharArray = inputTextString.toCharArray();                                               //convert the input string into a char array
             lastLetter = inputTextStringCharArray[inputTextStringCharArray.length-1];                               //get the last letter entered
-           //Log.i(MYDEBUG, "the array = " + inputTextStringCharArray.length);
-            currentPos = testTextContentCharArr[inputTextStringCharArray.length-1];                                 //get the letter to compare it ^ to
+            currentPos = testTextContentCharArr[inputTextStringCharArray.length-1];
             if (lastLetter != currentPos) {
                 spannable.setSpan(new ForegroundColorSpan(Color.RED), inputTextStringCharArray.length-1, inputTextStringCharArray.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);  //colour change red
                 numErrors++; //increment number of errors
             }
             else {
-                spannable.setSpan(new ForegroundColorSpan(Color.GREEN), inputTextStringCharArray.length-1, inputTextStringCharArray.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);    //colour change green = correct
-                numCorrects++;
+                spannable.setSpan(new ForegroundColorSpan(Color.GREEN), inputTextStringCharArray.length-1, inputTextStringCharArray.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);  //colour change red
+                numCorrects++; //increment number of errors
             }
             testTextContent.setText(spannable, TextView.BufferType.SPANNABLE);
+            letterIndex++;
         }
-        else {
-            s.append(inputTextBefore.charAt(inputTextBefore.length()-1));   //block back space functionality by automatically re-adding the letter that was deleted
+        else if (difference > 1 && inputText.hasFocus()) {
+            //Log.i(MYDEBUG, "reached swipe method");
+            //Log.i(MYDEBUG, String.valueOf(difference));
+
+            String[] wordArr = inputTextString.split(" ");
+            String latestWord = wordArr[wordArr.length-1];
+
+            //Log.i(MYDEBUG, "current word length = " + testContentStringArr[wordIndex].length());
+
+            int indexCurrentPosEnd = letterIndex + testContentStringArr[wordIndex].length();
+
+            //Log.i(MYDEBUG, "indexCurrentPosEnd = " + indexCurrentPosEnd);
+            //Log.i(MYDEBUG, "letterIndex = " + letterIndex);
+
+            if (!latestWord.equals(testContentStringArr[wordIndex])) {
+                spannable.setSpan(new ForegroundColorSpan(Color.RED), letterIndex, indexCurrentPosEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                numErrors = numErrors + latestWord.length();
+            }
+            else {
+                spannable.setSpan(new ForegroundColorSpan(Color.GREEN), letterIndex, indexCurrentPosEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                numCorrects = numCorrects + latestWord.length();
+            }
+            testTextContent.setText(spannable, TextView.BufferType.SPANNABLE);
+
+            letterIndex = letterIndex + testContentStringArr[wordIndex].length();
+            wordIndex++;
+
         }
+        else if (difference < 0 && inputText.hasFocus()) {
+            //Log.i(MYDEBUG, String.valueOf(difference));
+
+            inputText.clearFocus();
+            s.replace(0,s.length(),inputTextBefore);
+            inputText.requestFocus();
+            
+            //Log.i(MYDEBUG, s.toString());
+        }
+
+        if (wordIndex == testContentStringArr.length || letterIndex == testTextContentCharArr.length) {  //when the test is done
+            nextTest();
+        }
+
     }
 }

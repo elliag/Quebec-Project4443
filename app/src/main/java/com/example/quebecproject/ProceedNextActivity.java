@@ -53,7 +53,7 @@ public class ProceedNextActivity extends Activity {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(MYDEBUG, String.valueOf(nextTestNumber));
+                //Log.i(MYDEBUG, String.valueOf(nextTestNumber));
                 if (nextTestNumber == 4) {
                     Intent i = new Intent(getApplicationContext(), Results.class);
                     startActivity(i);

@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 
 import org.w3c.dom.Text;
 
+import java.util.Locale;
+
 public class Results extends Activity implements OnClickListener {
     final static String MYDEBUG = "MYDEBUG";
     //bundle thingy
@@ -35,10 +37,6 @@ public class Results extends Activity implements OnClickListener {
     Button returnButton;
     //mutable texts
     TextView participant, posture, averageTime, averageAccuracy, test1Time, test1Accuracy, test2Time, test2Accuracy, test3Time, test3Accuracy;
-    //variables for calculation (idk how tf we are going to use these tbh I am gonna kms (smile))
-    //gee golly gosh I sure hope Ellia and Ada give me the time(s) in seconds!
-    private int test1seconds, test2seconds, test3seconds;
-    private float test1acc, test2acc, test3acc;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,10 +90,17 @@ public class Results extends Activity implements OnClickListener {
     }
 
     private void Initialize() { //setup
-        Intent getData = getIntent();
-        //do something here with the data
-        // TODO: 4/6/2024
-        
+        //calculations
+        String test1seconds = CalculateTime(ParticipantData.getTest1Time());
+        String test2seconds = CalculateTime(ParticipantData.getTest2Time());
+        String test3seconds = CalculateTime(ParticipantData.getTest3Time());
+        String test1acc = String.valueOf(ParticipantData.getTest1Accuracy());
+        String test2acc = String.valueOf(ParticipantData.getTest2Accuracy());
+        String test3acc = String.valueOf(ParticipantData.getTest3Accuracy());
+        String averageSeconds = CalculateTime((ParticipantData.getTest1Time() + ParticipantData.getTest2Time() + ParticipantData.getTest3Time()) / 3);
+        String averageAcc = String.valueOf((ParticipantData.getTest1Accuracy() + ParticipantData.getTest2Accuracy() + ParticipantData.getTest3Accuracy()) / 3);
+
+        //assign IDs
         //user info
         participant = (TextView) findViewById(R.id.r_participant);
         posture = (TextView) findViewById(R.id.r_posture);
@@ -113,11 +118,28 @@ public class Results extends Activity implements OnClickListener {
         test3Accuracy = (TextView) findViewById(R.id.r_test3acc);
         //button
         returnButton = (Button) findViewById(R.id.buttonReturn);
-        
-        //do calculations here (this is dependent on how data is given)
-        // TODO: 4/6/2024  
-        
-        //apply calculated data to text fields here
-        // TODO: 4/6/2024
+
+        //assign values
+        participant.setText(ParticipantData.getName());
+        posture.setText(ParticipantData.getPosture());
+        averageTime.setText(averageSeconds);
+        averageAccuracy.setText(averageAcc);
+        test1Time.setText(test1seconds);
+        test2Time.setText(test2seconds);
+        test3Time.setText(test3seconds);
+        test1Accuracy.setText(test1acc);
+        test2Accuracy.setText(test2acc);
+        test3Accuracy.setText(test3acc);
+    }
+
+    //this method converts seconds to minutes and seconds
+    private String CalculateTime(float time) {
+        String answer;
+        int minutes, seconds;
+        minutes = (int) time / 60;
+        seconds = (int) time % 60;
+        answer = minutes + ":" + String.format(Locale.CANADA,"%02d", seconds); //need leading zeroes
+        //also this weird canada locale thing cause it gave me warnings if I didn't put it in there ^
+        return answer;
     }
 }

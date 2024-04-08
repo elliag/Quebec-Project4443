@@ -112,7 +112,7 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         elapsedTime = endTime - startTime;
         float elapsedTimeSeconds = elapsedTime / 1000.0f;   //get the time it took to type
 
-        testNumber++;   //increment test number for the next test
+        //Log.i(MYDEBUG, String.valueOf(elapsedTimeSeconds));
 
         imm.hideSoftInputFromWindow(inputText.getWindowToken(),0);  //hide the keyboard
 
@@ -120,21 +120,30 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         int total = numCorrects + numErrors;
         accuracy = ((double) numCorrects / total) * 100.0;  //compute accuracy (this is wrong idk what to do)
 
-        Log.i(MYDEBUG, "accuracy = " + String.valueOf(accuracy));
+        //Log.i(MYDEBUG, "accuracy = " + String.valueOf(accuracy));
 
         switch(testNumber) {    //log the data depending on what test we're on
             case 1:
                 ParticipantData.setTest1Time(elapsedTimeSeconds);
                 ParticipantData.setTest1Accuracy(accuracy);
+                //Log.i(MYDEBUG, String.valueOf(elapsedTimeSeconds));
+                Log.i(MYDEBUG, "test 1 = " + ParticipantData.getTest1Time() + " test 2 = " + ParticipantData.getTest2Time() + " Test 3 = " + ParticipantData.getTest3Time());
                 break;
             case 2:
                 ParticipantData.setTest2Time(elapsedTimeSeconds);
                 ParticipantData.setTest2Accuracy(accuracy);
+                //Log.i(MYDEBUG, String.valueOf(elapsedTimeSeconds));
+                Log.i(MYDEBUG, "test 1 = " + ParticipantData.getTest1Time() + " test 2 = " + ParticipantData.getTest2Time() + " Test 3 = " + ParticipantData.getTest3Time());
                 break;
             case 3:
                 ParticipantData.setTest3Time(elapsedTimeSeconds);
                 ParticipantData.setTest3Accuracy(accuracy);
+                //Log.i(MYDEBUG, String.valueOf(elapsedTimeSeconds));
+                Log.i(MYDEBUG, "test 1 = " + ParticipantData.getTest1Time() + " test 2 = " + ParticipantData.getTest2Time() + " Test 3 = " + ParticipantData.getTest3Time());
+                break;
         }
+
+        testNumber++;   //increment test number for the next test
 
         Bundle b = new Bundle();    //this is the only thing thats still being bundled but we can probably change it
 
@@ -208,10 +217,10 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         inputTextStringCharArray = inputTextString.toCharArray();//convert the input string into a char array
 
         int difference = s.length() - inputTextBefore.length();
-        Log.i(MYDEBUG, "difference = " + difference);
+        //Log.i(MYDEBUG, "difference = " + difference);
 
         if (difference == 1 && inputText.hasFocus()) {
-            Log.i(MYDEBUG, "reached tap method");
+            //Log.i(MYDEBUG, "reached tap method");
             
             lastLetter = inputTextStringCharArray[inputTextStringCharArray.length-1];                               //get the last letter entered
             currentPos = testTextContentCharArr[inputTextStringCharArray.length-1];

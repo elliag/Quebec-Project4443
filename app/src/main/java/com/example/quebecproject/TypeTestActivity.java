@@ -117,7 +117,8 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         imm.hideSoftInputFromWindow(inputText.getWindowToken(),0);  //hide the keyboard
 
         double accuracy;
-        accuracy = (numCorrects - (double) numErrors) / testTextContent.length();   //compute accuracy (this is wrong idk what to do)
+        int total = numCorrects + numErrors;
+        accuracy = ((double) numCorrects / total) * 100.0;  //compute accuracy (this is wrong idk what to do)
 
         Log.i(MYDEBUG, "accuracy = " + String.valueOf(accuracy));
 
@@ -211,7 +212,7 @@ public class TypeTestActivity extends Activity implements TextWatcher{
 
         if (difference == 1 && inputText.hasFocus()) {
             Log.i(MYDEBUG, "reached tap method");
-            //inputTextStringCharArray = inputTextString.toCharArray();                                               //convert the input string into a char array
+            
             lastLetter = inputTextStringCharArray[inputTextStringCharArray.length-1];                               //get the last letter entered
             currentPos = testTextContentCharArr[inputTextStringCharArray.length-1];
             if (lastLetter != currentPos) {
@@ -259,7 +260,7 @@ public class TypeTestActivity extends Activity implements TextWatcher{
             inputText.clearFocus();
             s.replace(0,s.length(),inputTextBefore);
             inputText.requestFocus();
-            
+
             //Log.i(MYDEBUG, s.toString());
         }
 

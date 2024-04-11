@@ -50,17 +50,17 @@ public class ParticipantInfo extends Activity implements OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == buttonOneHanded) {
-            handPosture = "single";
+            handPosture = "swipe";
             buttonOneHanded.setBackgroundColor(Color.GRAY);
             buttonTwoHanded.setBackgroundColor(Color.LTGRAY);
 
-            Log.i(MYDEBUG, "one hand pressed");
+            //Log.i(MYDEBUG, "one hand pressed");
         } else if (v == buttonTwoHanded) {
-            handPosture = "double";
+            handPosture = "tap";
             buttonOneHanded.setBackgroundColor(Color.LTGRAY);
             buttonTwoHanded.setBackgroundColor(Color.GRAY);
 
-            Log.i(MYDEBUG, "two hand pressed");
+            //Log.i(MYDEBUG, "two hand pressed");
         } else if (v == buttonStart) {
 
             // bundle the parameters to pass on to activity

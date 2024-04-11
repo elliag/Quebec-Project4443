@@ -129,11 +129,11 @@ public class Results extends Activity implements OnClickListener {
         //assign values
         participant.setText(ParticipantData.getName());
         switch (ParticipantData.getPosture()) {
-            case "single":
-                posture.setText("One-handed");
+            case "swipe":
+                posture.setText("Swipe");
                 break;
-            case "double":
-                posture.setText("Two-handed");
+            case "tap":
+                posture.setText("Tap");
                 break;
         }
         averageTime.setText(averageSeconds);

@@ -49,6 +49,7 @@
         android:layout_below="@id/startButton"
         android:ems="10"
         android:inputType="text"
-        android:alpha="0"/>
+        android:alpha="0"
+        android:importantForAutofill="no"/>
 
 </RelativeLayout>

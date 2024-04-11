@@ -198,7 +198,7 @@ public class TypeTestActivity extends Activity implements TextWatcher {
     //these methods are for listening for when the user input is edited
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        //Log.i(MYDEBUG, "after = " + after);
+
         inputTextBefore = inputTextString; //the input string before any changes are made
     }
 
@@ -217,10 +217,8 @@ public class TypeTestActivity extends Activity implements TextWatcher {
         inputTextStringCharArray = inputTextString.toCharArray();//convert the input string into a char array
 
         int difference = s.length() - inputTextBefore.length();
-        //Log.i(MYDEBUG, "difference = " + difference);
 
         if (difference == 1 && inputText.hasFocus()) {
-            //Log.i(MYDEBUG, "reached tap method");
             
             lastLetter = inputTextStringCharArray[inputTextStringCharArray.length-1];                               //get the last letter entered
             currentPos = testTextContentCharArr[inputTextStringCharArray.length-1];
@@ -236,18 +234,11 @@ public class TypeTestActivity extends Activity implements TextWatcher {
             letterIndex++;
         }
         else if (difference > 1 && inputText.hasFocus()) {
-            //Log.i(MYDEBUG, "reached swipe method");
-            //Log.i(MYDEBUG, String.valueOf(difference));
 
             String[] wordArr = inputTextString.split(" ");
             String latestWord = wordArr[wordArr.length-1];
 
-            //Log.i(MYDEBUG, "current word length = " + testContentStringArr[wordIndex].length());
-
             int indexCurrentPosEnd = letterIndex + testContentStringArr[wordIndex].length();
-
-            //Log.i(MYDEBUG, "indexCurrentPosEnd = " + indexCurrentPosEnd);
-            //Log.i(MYDEBUG, "letterIndex = " + letterIndex);
 
             if (!latestWord.equals(testContentStringArr[wordIndex])) {
                 spannable.setSpan(new ForegroundColorSpan(Color.RED), letterIndex, indexCurrentPosEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -264,13 +255,11 @@ public class TypeTestActivity extends Activity implements TextWatcher {
 
         }
         else if (difference < 0 && inputText.hasFocus()) {
-            //Log.i(MYDEBUG, String.valueOf(difference));
 
             inputText.clearFocus();
             s.replace(0,s.length(),inputTextBefore);
             inputText.requestFocus();
 
-            //Log.i(MYDEBUG, s.toString());
         }
 
         if (wordIndex == testContentStringArr.length || letterIndex == testTextContentCharArr.length) {  //when the test is done

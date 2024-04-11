@@ -35,19 +35,19 @@ public class TypeTestActivity extends Activity implements TextWatcher {
     private Button startButton;                 //start button to start the test
 
     //fields for collecting data
-    private int testNumber;
+    private int testNumber;                     //the current test number (1, 2, 3)
     //accuracy
-    private int numErrors = 0;
-    private int numCorrects = 0;
+    private int numErrors = 0;                  //stores the number of errors the user has made
+    private int numCorrects = 0;                //stores the number of correct inputs the user has made
     //time
-    private long startTime;
-    private long endTime;
-    private long elapsedTime;
+    private long startTime;                     //capture the time the test started
+    private long endTime;                       //capture the time the test ended
+    private long elapsedTime;                   //calculate how much time the test took
 
     //more
-    int wordIndex;
-    int letterIndex;
-    String[] testContentStringArr;
+    int wordIndex;                              //the word the user is currently at
+    int letterIndex;                            //the letter the user is currently at
+    String[] testContentStringArr;              //the content of the test in a string array
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,10 +84,10 @@ public class TypeTestActivity extends Activity implements TextWatcher {
 
         spannable = new SpannableString(testTextContent.getText());     //initialize the Spannable string that will allow us to change the colour of the test content when someone makes a boo boo mistake
 
-        inputTextString = "";
+        inputTextString = "";                                           //the String that will hold the input text
         inputText = (EditText) findViewById(R.id.textInput);            //initialize the invisible EditText that will hold what the user types.
         inputText.getText().clear();
-        inputText.addTextChangedListener(this);
+        inputText.addTextChangedListener(this);                 //add a text watcher to log errors and change colours of letters.
 
         startButton = (Button) findViewById(R.id.startButton);
         startButton.setEnabled(true);
@@ -104,16 +104,17 @@ public class TypeTestActivity extends Activity implements TextWatcher {
             }
         });
 
-        wordIndex = 0;
-        letterIndex = 0;
+        wordIndex = 0;      //will hold the index of the current word the user is at
+        letterIndex = 0;    //will hold the index of the current letter the user is at
     }
 
+    /**
+     * Prepares the activity to transition to the "proceed to next test" screen.
+     */
     private void nextTest() {   //called when the current test has finished
         endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;
         float elapsedTimeSeconds = elapsedTime / 1000.0f;   //get the time it took to type
-
-        //Log.i(MYDEBUG, String.valueOf(elapsedTimeSeconds));
 
         imm.hideSoftInputFromWindow(inputText.getWindowToken(),0);  //hide the keyboard
         inputText.clearFocus();
@@ -123,38 +124,29 @@ public class TypeTestActivity extends Activity implements TextWatcher {
         int total = numCorrects + numErrors;
         accuracy = ((double) numCorrects / total) * 100.0;  //compute accuracy (this is wrong idk what to do)
 
-        //Log.i(MYDEBUG, "accuracy = " + String.valueOf(accuracy));
-
         switch(testNumber) {    //log the data depending on what test we're on
             case 1:
                 ParticipantData.setTest1Time(elapsedTimeSeconds);
                 ParticipantData.setTest1Accuracy(accuracy);
-                //Log.i(MYDEBUG, String.valueOf(elapsedTimeSeconds));
-                Log.i(MYDEBUG, "test 1 = " + ParticipantData.getTest1Time() + " test 2 = " + ParticipantData.getTest2Time() + " Test 3 = " + ParticipantData.getTest3Time());
                 break;
             case 2:
                 ParticipantData.setTest2Time(elapsedTimeSeconds);
                 ParticipantData.setTest2Accuracy(accuracy);
-                //Log.i(MYDEBUG, String.valueOf(elapsedTimeSeconds));
-                Log.i(MYDEBUG, "test 1 = " + ParticipantData.getTest1Time() + " test 2 = " + ParticipantData.getTest2Time() + " Test 3 = " + ParticipantData.getTest3Time());
                 break;
             case 3:
                 ParticipantData.setTest3Time(elapsedTimeSeconds);
                 ParticipantData.setTest3Accuracy(accuracy);
-                //Log.i(MYDEBUG, String.valueOf(elapsedTimeSeconds));
-                Log.i(MYDEBUG, "test 1 = " + ParticipantData.getTest1Time() + " test 2 = " + ParticipantData.getTest2Time() + " Test 3 = " + ParticipantData.getTest3Time());
                 break;
         }
 
         testNumber++;   //increment test number for the next test
 
-        Bundle b = new Bundle();    //this is the only thing thats still being bundled but we can probably change it
+        Bundle b = new Bundle();
 
-        b.putInt("next test number", testNumber);
+        b.putInt("next test number", testNumber);   //bundle the next test number
 
         Intent i = new Intent(this, ProceedNextActivity.class);
         i.putExtras(b);
-        //startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);      //bring up the continue screen
         startActivity(i);
         finish();
 
@@ -216,48 +208,48 @@ public class TypeTestActivity extends Activity implements TextWatcher {
         inputTextString = s.toString();
         inputTextStringCharArray = inputTextString.toCharArray();//convert the input string into a char array
 
-        int difference = s.length() - inputTextBefore.length();
+        int difference = s.length() - inputTextBefore.length(); //the difference in length between the current input and the input before the last change
 
-        if (difference == 1 && inputText.hasFocus()) {
+        if (difference == 1 && inputText.hasFocus()) {  //for tap typing the difference will be 1
             
-            lastLetter = inputTextStringCharArray[inputTextStringCharArray.length-1];                               //get the last letter entered
-            currentPos = testTextContentCharArr[inputTextStringCharArray.length-1];
-            if (lastLetter != currentPos) {
+            lastLetter = inputTextStringCharArray[inputTextStringCharArray.length-1];    //get the last letter entered
+            currentPos = testTextContentCharArr[inputTextStringCharArray.length-1];      //get the current letter we are at
+            if (lastLetter != currentPos) { //if they are different
                 spannable.setSpan(new ForegroundColorSpan(Color.RED), inputTextStringCharArray.length-1, inputTextStringCharArray.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);  //colour change red
                 numErrors++; //increment number of errors
             }
-            else {
+            else {  //if they are the same
                 spannable.setSpan(new ForegroundColorSpan(Color.GREEN), inputTextStringCharArray.length-1, inputTextStringCharArray.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);  //colour change red
                 numCorrects++; //increment number of errors
             }
             testTextContent.setText(spannable, TextView.BufferType.SPANNABLE);
-            letterIndex++;
+            letterIndex++;  //increment the letter index
         }
-        else if (difference > 1 && inputText.hasFocus()) {
+        else if (difference > 1 && inputText.hasFocus()) {  //for swipe typing the difference will be more than 1
 
-            String[] wordArr = inputTextString.split(" ");
-            String latestWord = wordArr[wordArr.length-1];
+            String[] wordArr = inputTextString.split(" ");  //split the input text into a string array
+            String latestWord = wordArr[wordArr.length-1];        //get the latest word entered
 
-            int indexCurrentPosEnd = letterIndex + testContentStringArr[wordIndex].length();
+            int indexCurrentPosEnd = letterIndex + testContentStringArr[wordIndex].length();    //the end of the current word the user is at
 
-            if (!latestWord.equals(testContentStringArr[wordIndex])) {
+            if (!latestWord.equals(testContentStringArr[wordIndex])) {  //if they are not equal
                 spannable.setSpan(new ForegroundColorSpan(Color.RED), letterIndex, indexCurrentPosEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                numErrors = numErrors + latestWord.length();
+                numErrors = numErrors + latestWord.length();    //increment numErrors by the amount of letters in the latest word
             }
             else {
                 spannable.setSpan(new ForegroundColorSpan(Color.GREEN), letterIndex, indexCurrentPosEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                numCorrects = numCorrects + latestWord.length();
+                numCorrects = numCorrects + latestWord.length(); //increment numCorrects by the amount of letters in the latest word
             }
             testTextContent.setText(spannable, TextView.BufferType.SPANNABLE);
 
-            letterIndex = letterIndex + testContentStringArr[wordIndex].length();
-            wordIndex++;
+            letterIndex = letterIndex + testContentStringArr[wordIndex].length();   //increment letterIndex by the number of letters in the current word
+            wordIndex++;    //increment word index by 1
 
         }
-        else if (difference < 0 && inputText.hasFocus()) {
+        else if (difference < 0 && inputText.hasFocus()) {  //to "disable" backspace
 
-            inputText.clearFocus();
-            s.replace(0,s.length(),inputTextBefore);
+            inputText.clearFocus(); //so that the Text Watcher is not called again
+            s.replace(0,s.length(),inputTextBefore);    //replace the text in input text with whatever the previous input was before the latest change
             inputText.requestFocus();
 
         }

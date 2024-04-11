@@ -25,7 +25,7 @@ public class ProceedNextActivity extends Activity {
         setContentView(R.layout.nexttest);
 
         Bundle b = getIntent().getExtras();
-        nextTestNumber = b != null ? b.getInt("next test number") : 0;
+        nextTestNumber = b != null ? b.getInt("next test number") : 0;  //get the next test number
 
         Initialize();
     }
@@ -54,12 +54,12 @@ public class ProceedNextActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (nextTestNumber == 4) {
+                if (nextTestNumber == 4) {  //go to the results page
                     Intent i = new Intent(getApplicationContext(), Results.class);
                     startActivity(i);
                     finish();
                 }
-                else {
+                else {                      //go to the next test
                     Bundle b = new Bundle();
 
                     b.putInt("test number", nextTestNumber);

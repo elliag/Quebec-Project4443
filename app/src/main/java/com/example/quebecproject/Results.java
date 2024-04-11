@@ -97,14 +97,14 @@ public class Results extends Activity implements OnClickListener {
         float t2s = ParticipantData.getTest2Time();
         float t3s = ParticipantData.getTest3Time();
 
-        String test1seconds = String.valueOf(ParticipantData.getTest1Time());//CalculateTime(ParticipantData.getTest1Time());
-        String test2seconds = String.valueOf(ParticipantData.getTest2Time());//CalculateTime(ParticipantData.getTest2Time());
-        String test3seconds = String.valueOf(ParticipantData.getTest3Time());//CalculateTime(ParticipantData.getTest3Time());
-        String test1acc = String.valueOf(ParticipantData.getTest1Accuracy());
-        String test2acc = String.valueOf(ParticipantData.getTest2Accuracy());
-        String test3acc = String.valueOf(ParticipantData.getTest3Accuracy());
-        String averageSeconds = String.valueOf((t1s + t2s + t3s) / 3f);//CalculateTime((ParticipantData.getTest1Time() + ParticipantData.getTest2Time() + ParticipantData.getTest3Time()) / 3);
-        String averageAcc = String.valueOf((ParticipantData.getTest1Accuracy() + ParticipantData.getTest2Accuracy() + ParticipantData.getTest3Accuracy()) / 3);
+        String test1seconds = String.valueOf(ParticipantData.getTest1Time()) + "s";//CalculateTime(ParticipantData.getTest1Time());
+        String test2seconds = String.valueOf(ParticipantData.getTest2Time()) + "s";//CalculateTime(ParticipantData.getTest2Time());
+        String test3seconds = String.valueOf(ParticipantData.getTest3Time()) + "s";//CalculateTime(ParticipantData.getTest3Time());
+        String test1acc = String.valueOf(ParticipantData.getTest1Accuracy()) + "%";
+        String test2acc = String.valueOf(ParticipantData.getTest2Accuracy()) + "%";
+        String test3acc = String.valueOf(ParticipantData.getTest3Accuracy()) + "%";
+        String averageSeconds = String.valueOf((t1s + t2s + t3s) / 3f) + "s";//CalculateTime((ParticipantData.getTest1Time() + ParticipantData.getTest2Time() + ParticipantData.getTest3Time()) / 3);
+        String averageAcc = String.valueOf((ParticipantData.getTest1Accuracy() + ParticipantData.getTest2Accuracy() + ParticipantData.getTest3Accuracy()) / 3) + "%";
 
         //assign IDs
         //user info
@@ -124,6 +124,7 @@ public class Results extends Activity implements OnClickListener {
         test3Accuracy = (TextView) findViewById(R.id.r_test3acc);
         //button
         returnButton = (Button) findViewById(R.id.buttonReturn);
+        returnButton.setOnClickListener(this);
 
         //assign values
         participant.setText(ParticipantData.getName());

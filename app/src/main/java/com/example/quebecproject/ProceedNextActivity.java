@@ -3,11 +3,13 @@ package com.example.quebecproject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class ProceedNextActivity extends Activity {
@@ -24,9 +26,7 @@ public class ProceedNextActivity extends Activity {
 
         Bundle b = getIntent().getExtras();
         nextTestNumber = b != null ? b.getInt("next test number") : 0;
-        Log.i(MYDEBUG, String.valueOf(nextTestNumber));
-        //name = b != null ? b.getString("name") : null;
-        //handPosture = b != null ? b.getString("hand posture") : null;
+
         Initialize();
     }
 
@@ -53,7 +53,7 @@ public class ProceedNextActivity extends Activity {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Log.i(MYDEBUG, String.valueOf(nextTestNumber));
+               
                 if (nextTestNumber == 4) {
                     Intent i = new Intent(getApplicationContext(), Results.class);
                     startActivity(i);
@@ -64,12 +64,25 @@ public class ProceedNextActivity extends Activity {
 
                     b.putInt("test number", nextTestNumber);
 
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtras(b);
-                    setResult(Activity.RESULT_OK,returnIntent); //kill me
+                    Intent i = new Intent(getApplicationContext(), TypeTestActivity.class);
+                    i.putExtras(b);
+                    startActivity(i);
                     finish();
                 }
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt("NEXT_TEST_NUMBER_KEY", nextTestNumber);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        nextTestNumber = savedInstanceState.getInt("NEXT_TEST_NUMBER_KEY");
     }
 }

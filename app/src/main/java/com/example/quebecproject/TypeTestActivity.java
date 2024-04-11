@@ -22,9 +22,8 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class TypeTestActivity extends Activity implements TextWatcher{
+public class TypeTestActivity extends Activity implements TextWatcher {
     final static String MYDEBUG = "MYDEBUG";
-    int LAUNCH_SECOND_ACTIVITY = 1;             //request code for the startActivityResult stuff
     InputMethodManager imm;                     //to manage the keyboard
     private TextView testTitle;                 //title of the test (Test 1, Test 2, Test 3)
     private TextView testTextContent;           //content of the test (to be copies by the user)
@@ -34,10 +33,6 @@ public class TypeTestActivity extends Activity implements TextWatcher{
     private String inputTextString;             //String version of whatever tf the user is typing
     private EditText inputText;                 //EditText that holds what the user is typing
     private Button startButton;                 //start button to start the test
-
-    //Participant Info
-    private String name;
-    private String handPosture;
 
     //fields for collecting data
     private int testNumber;
@@ -86,12 +81,16 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         }
         testTextContentCharArr = testTextContent.getText().toString().toCharArray();    //convert the content of that text view into a char array.
         testContentStringArr = testTextContent.getText().toString().split(" ");     //separate words in the test content
+
         spannable = new SpannableString(testTextContent.getText());     //initialize the Spannable string that will allow us to change the colour of the test content when someone makes a boo boo mistake
+
         inputTextString = "";
         inputText = (EditText) findViewById(R.id.textInput);            //initialize the invisible EditText that will hold what the user types.
         inputText.getText().clear();
         inputText.addTextChangedListener(this);
+
         startButton = (Button) findViewById(R.id.startButton);
+        startButton.setEnabled(true);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {   //brings up the keyboard when start button pressed
                 inputText.requestFocus();
@@ -100,9 +99,11 @@ public class TypeTestActivity extends Activity implements TextWatcher{
                 imm.showSoftInput(inputText, InputMethodManager.SHOW_FORCED);
 
                 startTime = System.currentTimeMillis(); //start the timer
+                startButton.setEnabled(false);
 
             }
         });
+
         wordIndex = 0;
         letterIndex = 0;
     }
@@ -115,6 +116,8 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         //Log.i(MYDEBUG, String.valueOf(elapsedTimeSeconds));
 
         imm.hideSoftInputFromWindow(inputText.getWindowToken(),0);  //hide the keyboard
+        inputText.clearFocus();
+        inputText.setFocusableInTouchMode(false);
 
         double accuracy;
         int total = numCorrects + numErrors;
@@ -151,30 +154,10 @@ public class TypeTestActivity extends Activity implements TextWatcher{
 
         Intent i = new Intent(this, ProceedNextActivity.class);
         i.putExtras(b);
-        startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);      //bring up the continue screen
+        //startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);      //bring up the continue screen
+        startActivity(i);
+        finish();
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //i feel like this is whats making it slow, it can probably be changed
-        super.onActivityResult(requestCode, resultCode, data);
-
-        Bundle b;
-
-        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
-            if(resultCode == Activity.RESULT_OK){
-                b = data.getExtras();
-                //name = b != null ? b.getString("name") : null;
-                testNumber = b != null ? b.getInt("test number") : 0;
-                //handPosture = b != null ? b.getString("hand posture") : null;
-
-                inputText.removeTextChangedListener(this);
-
-
-                Initialize();
-
-            }
-        }
     }
 
     @Override
@@ -183,7 +166,15 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         outState.putCharSequence("TEST_TITLE_KEY", testTitle.getText());
         outState.putCharSequence("TEST_CONTENT_KEY", testTextContent.getText());
         outState.putCharSequence("INPUT_KEY", inputText.getText());
+        outState.putString("INPUT_TEXT_STRING_KEY", inputTextString);
         outState.putInt("TEST_NUMBER_KEY", testNumber);
+        outState.putString("INPUT_TEXT_BEFORE_KEY", inputTextBefore);
+        outState.putInt("NUM_ERRORS_KEY", numErrors);
+        outState.putInt("NUM_CORRECTS_KEY", numCorrects);
+        outState.putLong("START_TIME_KEY", startTime);
+        outState.putInt("WORD_INDEX_KEY", wordIndex);
+        outState.putInt("LETTER_INDEX_KEY", letterIndex);
+        outState.putStringArray("TEST_CONTENT_ARRAY_KEY", testContentStringArr);
     }
 
     @Override
@@ -192,7 +183,16 @@ public class TypeTestActivity extends Activity implements TextWatcher{
         testTitle.setText(savedInstanceState.getCharSequence("TEST_TITLE_KEY"));
         testTextContent.setText(savedInstanceState.getCharSequence("TEST_CONTENT_KEY"));
         inputText.setText(savedInstanceState.getCharSequence("INPUT_KEY"));
+        inputTextString = savedInstanceState.getString("INPUT_TEXT_STRING_KEY");
         testNumber = savedInstanceState.getInt("TEST_NUMBER_KEY");
+        inputTextBefore = savedInstanceState.getString("INPUT_TEXT_BEFORE_KEY");
+        numErrors = savedInstanceState.getInt("NUM_ERRORS_KEY");
+        numCorrects = savedInstanceState.getInt("NUM_CORRECTS_KEY");
+        startTime = savedInstanceState.getLong("START_TIME_KEY");
+        wordIndex = savedInstanceState.getInt("WORD_INDEX_KEY");
+        letterIndex = savedInstanceState.getInt("LETTER_INDEX_KEY");
+        testContentStringArr = savedInstanceState.getStringArray("TEST_CONTENT_ARRAY_KEY");
+        spannable = new SpannableString(testTextContent.getText());
     }
 
     //these methods are for listening for when the user input is edited
